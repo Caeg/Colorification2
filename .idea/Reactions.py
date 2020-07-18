@@ -28,19 +28,54 @@ def MushieOpen():
     print("This is mushie open")
 
 def PermitSetUp():
-    pyautogui.press('enter')
-    pyautogui.click(x=47, y=50)
-    pyautogui.click(x=21, y=84)
-    pyautogui.click(x=572, y=389)
-    pyautogui.press('tab')
-    pyautogui.write('696420696')
+    global running
     pyautogui.press('enter')
     time.sleep(0.14)
-    pyautogui.click(x=593, y=270)
 
+    scanpic = pyautogui.screenshot()
+    checkColor = scanpic.getpixel((715,409))
+    if (str(checkColor)) != ("(68, 136, 187)"):
+        pyautogui.click(x=47, y=57)
+        pyautogui.click(x=30, y=86)
+        pyautogui.click(x=507, y=409)
+        pyautogui.press('tab')
+        pyautogui.write('666666666')
+        pyautogui.press('enter')
+        time.sleep(0.18)
+        pyautogui.click(x=594, y=275)
+        running = False
+
+    else:
+        pyautogui.press('enter')
+        pyautogui.click(x=26, y=84)
+        pyautogui.click()
+        time.sleep(1)
+        pyautogui.write('S>RPOT')
 
 def MushieSetUp():
-    print("This is mushie setup")
+    global running
+    pyautogui.doubleClick(x=16, y=90)                       #clicks the mushie in your inventory
+    time.sleep(0.18)
+    scanpic = pyautogui.screenshot()
+    checkColor = scanpic.getpixel((664, 451))
+
+    if (str(checkColor)) == ("(255, 255, 255)"):             #checks if the "you can't open the shop window is there"
+
+        pyautogui.write('8')                           #types the name of the shop
+        pyautogui.press('enter')
+        pyautogui.press('enter')
+        pyautogui.click(x=47, y=57)                         #clicks on the use tab
+        pyautogui.click(x=30, y=86)                         #clicks first item in use tab
+        pyautogui.click(x=507, y=409)                       #places the item in your shop
+        pyautogui.press('tab')                              #presses tab so that you only put in 1 item
+        pyautogui.write('666666666')                        #inputs the price
+        pyautogui.press('enter')                            #confirms item into shop
+        time.sleep(0.28)                                    #delay to prevent hang
+        pyautogui.click(x=594, y=275)                       #clicks open
+        running = False                                     #turns off program (not sure if this works)
+
+    else:
+        pyautogui.press('enter')                            #closes shop can't open window
 
 def CallTop():
     print("This is call top")
@@ -105,8 +140,7 @@ def start(scanning, etc):
             foundColor = scanpic.getpixel(scanning[3])
             if (str(foundColor)) != (str(scanning[2])):
                 myReaction()
-                if (etc[2] != 1):
-                    running = False
+
 
     else:
         while running == True:
@@ -117,5 +151,3 @@ def start(scanning, etc):
                 myReaction()
                 if (etc[2] != 1):
                     running = False
-
-
